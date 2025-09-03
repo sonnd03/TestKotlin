@@ -32,88 +32,88 @@ fun main() {
     val myString: String = "Nguyen Dac Son"
     val myString1: String = "Nguyen Dac Son1"
 
-//    println("type data position 0 on my String = ${myString[0]}")
-//    println("length String: " + myString.length)
-//    println(myString.uppercase())
-//    println(myString.lowercase())
-//    val compare: Int = myString.compareTo(myString1)
-//    println(compare) //(if identical => return 0 else => return -1)
-//    //// search on String
-//    println(myString.indexOf("Dac"))  // 7 location start Dac
-//    println(myString.indexOf("Da1c"))  // -1 because "Da1c" not find on myString
-//    println(myString.plus(myString1))
-//    println("my name is $myString")
+    println("type data position 0 on my String = ${myString[0]}")
+    println("length String: " + myString.length)
+    println(myString.uppercase())
+    println(myString.lowercase())
+    val compare: Int = myString.compareTo(myString1)
+    println(compare) //(if identical => return 0 else => return -1)
+    //// search on String
+    println(myString.indexOf("Dac"))  // 7 location start Dac
+    println(myString.indexOf("Da1c"))  // -1 because "Da1c" not find on myString
+    println(myString.plus(myString1))
+    println("my name is $myString")
 
     /// Array
-//    val myArrayOf0 = arrayOf(1, 2, 3)
-//    val myArrayOf01 = arrayOf("apple" to 12, "hello" to 2)
-//    var myArrayOf = arrayOf("a", "b", "c")
-//    var myArrayOf1 = arrayOf("a", "b", "c")
-//    val array = arrayOfNulls<Int>(4)
-//    val array1 = Array<Int>(4) { 1 }
-//    val array2 = Array(5) { i -> (i * i).toString() }
-//    val arrayTwoDimensional = Array(2) { Array(2) { 2 } }
-//    array[0] = 12;
-//    array[3] = 1
+    val myArrayOf0 = arrayOf(1, 2, 3)
+    val myArrayOf01 = arrayOf("apple" to 12, "hello" to 2)
+    var myArrayOf = arrayOf("a", "b", "c")
+    var myArrayOf1 = arrayOf("a", "b", "c")
+    val array = arrayOfNulls<Int>(4)
+    val array1 = Array<Int>(4) { 1 }
+    val array2 = Array(5) { i -> (i * i).toString() }
+    val arrayTwoDimensional = Array(2) { Array(2) { 2 } }
+    array[0] = 12;
+    array[3] = 1
 
-//    /// change value myArrayOf[0]
-//    myArrayOf[0] = "12A10"
+    /// change value myArrayOf[0]
+    myArrayOf[0] = "12A10"
 
-//    /// add on array
-//    myArrayOf += "add value"
+    /// add on array
+    myArrayOf += "add value"
 
-//    /// check find on array
-//    if ("12A3" in myArrayOf) println("success") else println("not found")
+    /// check find on array
+    if ("12A3" in myArrayOf) println("success") else println("not found")
 
-//    /// check type
-//    if (number1 is Int) println("type is Int") else println("not type Int")  // type is Int
+    /// check type
+    if (number1 is Int) println("type is Int") else println("not type Int")  // type is Int
 
-//    /// Loop array
-//    for (x in myArrayOf) println(x)  // a, b, c
+    /// Loop array
+    for (x in myArrayOf) println(x)  // a, b, c
 
-//    /// sum all value on array
-//    println(myArrayOf0.sum()) // 6
+    /// sum all value on array
+    println(myArrayOf0.sum()) // 6
 
-//    /// shuffle
-//    val shuffle = myArrayOf0.toList().shuffled()
+    /// shuffle
+    val shuffle = myArrayOf0.toList().shuffled()
 
-//    /// to Map
-//    val map = myArrayOf01.toMap()
+    /// to Map
+    val map = myArrayOf01.toMap()
     /// print
 
-//    println(shuffle.joinToString())
-//    println(arrayTwoDimensional.contentDeepToString())
-//    println(myArrayOf.joinToString()) // a, b, c
+    println(shuffle.joinToString())
+    println(arrayTwoDimensional.contentDeepToString())
+    println(myArrayOf.joinToString()) // a, b, c
 
 
-//    println(array.joinToString());
-//    println(array1.joinToString())
-//    println(array2.joinToString())
+    println(array.joinToString());
+    println(array1.joinToString())
+    println(array2.joinToString())
 
-//    println(myArrayOf.contentEquals(myArrayOf1)) // (true)
-//    println(myArrayOf contentDeepEquals myArrayOf1) // (true)
-//    println(myArrayOf[0] + " size: " + myArrayOf.size )
+    println(myArrayOf.contentEquals(myArrayOf1)) // (true)
+    println(myArrayOf contentDeepEquals myArrayOf1) // (true)
+    println(myArrayOf[0] + " size: " + myArrayOf.size )
 
 
-//    println(myLong::class.simpleName)
-//    println(myLong1::class.simpleName)
-//    println(myFloat1)
-//    OddNumber().oddNumber(list)
-//    OddNumber().oddNumber1(list)
-//
-//    SumEvenNumber().sumEvenNumber1(list)
-//
-//    ListCopy().listCopy(list)
-//
-//    println(list)
-//    println(set)
-//    println(mapList)
-//
-//    changeList.add(8)
-//
-//    println(mapList["name"])
-//    mapList.put("name3", 21);
-//    println(mapList)
+    println(myLong::class.simpleName)
+    println(myLong1::class.simpleName)
+    println(myFloat1)
+    OddNumber().oddNumber(list)
+    OddNumber().oddNumber1(list)
+
+    SumEvenNumber().sumEvenNumber1(list)
+
+    ListCopy().listCopy(list)
+
+    println(list)
+    println(set)
+    println(mapList)
+
+    changeList.add(8)
+
+    println(mapList["name"])
+    mapList.put("name3", 21);
+    println(mapList)
 
 // Operator
 /// Arithmetic(số học): +, += , - , -=, *, *= , %, %= , ++, --, /, /=
