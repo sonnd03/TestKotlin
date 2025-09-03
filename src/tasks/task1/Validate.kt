@@ -1,11 +1,4 @@
 package com.example.test.tasks.task1
-//
-//private var orderNumber: Int = 0;
-//val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-//var changeList = mutableListOf<Int>(1, 2, 3, 4, 5, 6, 7);
-//val set = setOf(1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10);
-//val mapList = mutableMapOf("name" to 18, "name1" to 19, "name2" to 20);
-
 
 fun main() {
 // Type Data
