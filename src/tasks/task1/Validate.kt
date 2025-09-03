@@ -1,10 +1,10 @@
 package com.example.test.tasks.task1
-
-private var orderNumber: Int = 0;
-val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-var changeList = mutableListOf<Int>(1, 2, 3, 4, 5, 6, 7);
-val set = setOf(1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10);
-val mapList = mutableMapOf("name" to 18, "name1" to 19, "name2" to 20);
+//
+//private var orderNumber: Int = 0;
+//val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+//var changeList = mutableListOf<Int>(1, 2, 3, 4, 5, 6, 7);
+//val set = setOf(1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10);
+//val mapList = mutableMapOf("name" to 18, "name1" to 19, "name2" to 20);
 
 
 fun main() {
@@ -35,40 +35,71 @@ fun main() {
 
     /// Character
     //// \t(tab) , \n(new line),
-
-
     val myLetter: Char = 'S'
     val myString: String = "Nguyen Dac Son"
     val myString1: String = "Nguyen Dac Son1"
 
-    println("type data position 0 on my String = ${myString[0]}")
-    println("length String: " + myString.length)
-    println(myString.uppercase())
-    println(myString.lowercase())
-    val compare: Int = myString.compareTo(myString1)
-    println(compare) //(if identical => return 0 else => return -1)
-    //// search on String
-    println(myString.indexOf("Dac"))  // 7 location start Dac
-    println(myString.indexOf("Da1c"))  // -1 because "Da1c" not find on myString
-    println(myString.plus(myString1))
-    println("my name is $myString")
+//    println("type data position 0 on my String = ${myString[0]}")
+//    println("length String: " + myString.length)
+//    println(myString.uppercase())
+//    println(myString.lowercase())
+//    val compare: Int = myString.compareTo(myString1)
+//    println(compare) //(if identical => return 0 else => return -1)
+//    //// search on String
+//    println(myString.indexOf("Dac"))  // 7 location start Dac
+//    println(myString.indexOf("Da1c"))  // -1 because "Da1c" not find on myString
+//    println(myString.plus(myString1))
+//    println("my name is $myString")
 
     /// Array
-    val myArrayOf = arrayOf("12A3", "12A4", "12A5")
-    println(myArrayOf[0] + " size: " + myArrayOf.size )
-    /// change value myArrayOf[0]
-    myArrayOf[0] = "12A10"
-    println(myArrayOf[0])
-    /// check find on array
-    if ("12A3" in myArrayOf) println("success") else println("not found")
-    /// Loop array
-    for (x in myArrayOf) println(x)
+//    val myArrayOf0 = arrayOf(1, 2, 3)
+//    val myArrayOf01 = arrayOf("apple" to 12, "hello" to 2)
+//    var myArrayOf = arrayOf("a", "b", "c")
+//    var myArrayOf1 = arrayOf("a", "b", "c")
+//    val array = arrayOfNulls<Int>(4)
+//    val array1 = Array<Int>(4) { 1 }
+//    val array2 = Array(5) { i -> (i * i).toString() }
+//    val arrayTwoDimensional = Array(2) { Array(2) { 2 } }
+//    array[0] = 12;
+//    array[3] = 1
+
+//    /// change value myArrayOf[0]
+//    myArrayOf[0] = "12A10"
+
+//    /// add on array
+//    myArrayOf += "add value"
+
+//    /// check find on array
+//    if ("12A3" in myArrayOf) println("success") else println("not found")
+
+//    /// check type
+//    if (number1 is Int) println("type is Int") else println("not type Int")  // type is Int
+
+//    /// Loop array
+//    for (x in myArrayOf) println(x)  // a, b, c
+
+//    /// sum all value on array
+//    println(myArrayOf0.sum()) // 6
+
+//    /// shuffle
+//    val shuffle = myArrayOf0.toList().shuffled()
+
+//    /// to Map
+//    val map = myArrayOf01.toMap()
+    /// print
+
+//    println(shuffle.joinToString())
+//    println(arrayTwoDimensional.contentDeepToString())
+//    println(myArrayOf.joinToString()) // a, b, c
 
 
-// Operator
-    /// Arithmetic(số học): +, += , - , -=, *, *= , %, %= , ++, --, /, /=
-    /// Comparison(so sánh): ==, != , > , < , >= , <=, ===(phân vùng bộ nhớ)
-    /// Logic &&(and) ||(or) !(not)
+//    println(array.joinToString());
+//    println(array1.joinToString())
+//    println(array2.joinToString())
+
+//    println(myArrayOf.contentEquals(myArrayOf1)) // (true)
+//    println(myArrayOf contentDeepEquals myArrayOf1) // (true)
+//    println(myArrayOf[0] + " size: " + myArrayOf.size )
 
 
 //    println(myLong::class.simpleName)
@@ -91,6 +122,10 @@ fun main() {
 //    mapList.put("name3", 21);
 //    println(mapList)
 
+// Operator
+/// Arithmetic(số học): +, += , - , -=, *, *= , %, %= , ++, --, /, /=
+/// Comparison(so sánh): ==, != , > , < , >= , <=, ===(phân vùng bộ nhớ)
+/// Logic &&(and) ||(or) !(not)
 }
 
 //In ra các số lẻ.
