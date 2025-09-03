@@ -1,15 +1,14 @@
 package com.example.test.tasks.task1.tasks.task1
 
-import com.example.test.tasks.task1.tasks.task1.enumClass.Love
-import com.example.test.tasks.task2.high
-import kotlin.system.exitProcess
-
 fun main() {
     // if
     var height = 12
     val taller = 15
     val home = 18
     var room: Int? = null
+    val listItem = listOf(1, 2, 3, 5, 4, 7, 8)
+    val array1 = arrayOf("Day", "An", "Lam")
+
 //    ////
 //    if (height < taller && height != 0){
 //        println("taller > height")
@@ -85,8 +84,6 @@ fun main() {
 //    }
 
 // For Loops
-//    val listItem = listOf(1, 2, 3, 5, 4, 7, 8)
-//    val array1 = arrayOf("Day", "An", "Lam")
 //    for (i in 1..10) {
 //        // 1...10
 //    }
@@ -109,6 +106,16 @@ fun main() {
 //       // a bcdefghijklmnopqrs
 //    }
 
+// ForEach
+//    listItem.forEach { it -> println(it) } // 1235478
+//    listItem.forEach { it -> if (it > 2) println(it) } //35478
+
+//    listItem.forEach (fun(value: Int) {
+//        if (value == 1 || value == 4) return // return as continue
+//        print(value)
+//    })
+
+
 // While
 //    while (height < taller){
 //        println("height < taller")
@@ -118,4 +125,5 @@ fun main() {
 //        println(height)
 //        height++
 //    }while (height < taller)
+
 }
