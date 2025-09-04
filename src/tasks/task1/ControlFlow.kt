@@ -1,138 +1,107 @@
 package com.example.test.tasks.task1.tasks.task1
 
-import com.example.test.tasks.task1.tasks.task1.enumClass.Love
-import kotlin.random.Random
+var a = 12
+const val b = 15
+const val c = 18
+var d: Int? = null
+val listItem = listOf(1, 2, 3, 5, 4, 7, 8)
+val array1 = arrayOf("Day", "Month", "Year")
 
-fun main() {
-    // if
-    var height = 12
-    val taller = 15
-    val home = 18
-    var room: Int? = null
-    val listItem = listOf(1, 2, 3, 5, 4, 7, 8)
-    val array1 = arrayOf("Day", "An", "Lam")
-
-    ////
-    if (height < taller && height != 0){
-        println("taller > height")
-    }else{
+fun ifSyntax() {
+    // If statement
+    if (a < b && a != 0) {
+        println("b > a")
+    } else {
         println("fail")
-    }
-    ///
-    if (height < taller) room = height
-    ////
-    room = if (height < taller) height else taller
-    room = if (height < taller) height else if (height > taller) taller else home
+    }                                       // b > a
 
-    // When
+    // If as single-line statement
+    if (a < b) d = a
+    println("after check a<b: $d")          // after check a<b: 12
+
+    // If expression
+    d = if (a < b) a else b
+    println("value d: $d")                  // value d: 12
+
+    d = if (a < b) a else if (a > b) b else c
+    println("value d: $d")                  // value d: 12
+}
+
+fun whenSyntax() {
     val name = "Son"
+    val notify = 1
+
+    // when statement
     when (name) {
         "SoN" -> println("My name is SoN")
         "Son" -> println("My name is Son")
         else -> println("No name")
-    }
-    var message: String? = null
-    val notify = 1
-    message = when (notify) {
+    }       // My name is Son
+
+    // when expression
+    val message = when (notify) {
         1 -> "Success"
         2 -> "Fail"
         else -> "empty"
     }
+    println("Notify: $message")             // Notify: Success
+}
 
-    /// Expression
-    ////
-    fun getRandomLove(): Love {
-        return if (Random.nextBoolean()) Love.Love else Love.NotLove
-    }
-
-    val status = when (getRandomLove()) {
-        Love.Love -> 1
-        Love.NotLove -> 0
-    }
-    if (status == 0) println("Not Love: $status") else println("Love: $status")
-
-    /// when{}
-    ////
-    val message1 = when {
-        height < taller -> "More letter"
-        taller > height -> "More long"
-        else -> "Exception"
-    }
-    ////
-    val message2 = when (val input = "yes") {
-        "yes" -> "Yes"
-        "no" -> "No"
-        else -> "Exception"
-    }
-    ////
-    when (height) {
-        in 1..10 -> println("1 in 10")
-        in 11..20 -> println("11 in 20")
-        else -> "null"
-    }
-    ////
-    fun checkType(input: Any): Boolean = when (input) {
-        is String -> input.startsWith("Nguyen")
-        else -> false
-    }
-
-    val testType = "Nguyen Dac Son"
-    checkType(testType)
-    ////
-    fun checkLoveYou(type: Love) {
-        when (type) {
-            Love.Love -> println("Status is Loving")
-            Love.NotLove -> println("Status isn't Love")
-        }
-    }
-
-// For Loops
+fun forLoop() {
+    // Range-based loop (inclusive)
     for (i in 1..10) {
-        // 1...10
+        print(i)                            // 12345678910
     }
-    ///
-    for (i in 1..<10) {
-        // 1..9
+
+    // Range-based loop (exclusive)
+    for (i in 1 until 10) {
+        print(i)                            // 123456789
     }
-    ///
+
+    // Range with step & direction
     for (i in 6 downTo 0 step 2) {
-        // 6420
+        print(i)                            // 6420
     }
-    ///
+
+    // For-each element in collection
     for (i in listItem) {
-        //12345678
+        print(i)                            // 1235478
     }
-    ///
+
+    // Index-based for loop
     for (i in array1.indices) {
-        println(array1[i])
+        print(array1[i])                    // DayMonthYear
     }
-    ///
+
+    // Indexed for loop
     for ((index, value) in array1.withIndex()) {
-        println("Index: $index, Value: $value")
-    }
-    ///
-    for (chars in 'a'..'s'){
-       // a bcdefghijklmnopqrs
+        print("Index: $index, Value: $value")       // Index: 0, Value: DayIndex: 1, Value: MonthIndex: 2, Value: Year
     }
 
-// ForEach
-    listItem.forEach { it -> println(it) } // 1235478
-    listItem.forEach { it -> if (it > 2) println(it) } //35478
+    // Char range loop
+    for (chars in 'a'..'s') {
+        print("$chars ")                            // a b c d e f g h i j k l m n o p q r s
+    }
+}
 
-    listItem.forEach (fun(value: Int) {
-        if (value == 1 || value == 4) return // return as continue
-        print(value)
-    })
-
-
-// While
-    while (height < taller){
-        println("height < taller")
+fun whileSyntax() {
+    // while
+    while (a < b) {
+        print("a < b")
         break
-    }
-    do {
-        println(height)
-        height++
-    }while (height < taller)
+    }                                               // a < b
 
+    // do ... while
+    do {
+        print("$a ")                                // 12 13 14
+        a++
+    } while (a < b)
+}
+
+
+fun main() {
+    ifSyntax()
+    whenSyntax()
+    forLoop()
+    whileSyntax()
 }

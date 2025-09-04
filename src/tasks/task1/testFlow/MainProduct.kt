@@ -10,8 +10,21 @@ fun main() {
 
     val listProduct = mutableListOf<Product>();
 
-    repeat(n){ i ->
-        println("\n Input product order: ${i+1}");
+//    repeat(n){ i ->
+//        println("\n Input product order: ${i+1}");
+//        println("Chose type product: (1: retail, 2: wholesale)");
+//        val type = scanner.nextInt();
+//        scanner.nextLine();
+//        val pr: Product = if (type == 1) {
+//            Retail("", "", 0.0, 0).apply { input(scanner) }
+//        }else{
+//            WholeSale("", "", 0.0, 0).apply { input(scanner) }
+//        }
+//
+//        listProduct.add(pr);
+//    }
+    for(i in 1..n){
+        println("\n Input product order: $i");
         println("Chose type product: (1: retail, 2: wholesale)");
         val type = scanner.nextInt();
         scanner.nextLine();
