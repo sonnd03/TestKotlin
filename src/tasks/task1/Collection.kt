@@ -1,5 +1,7 @@
 package com.example.test.tasks.task1.tasks.task1
 
+import javax.swing.text.Element
+
 private fun syntaxArray() {
     val arrayOf = arrayOf(1, 2, 3)          // except type Int can String, Char, ....
     val arrayOf01 = arrayOf(1, 3, 5)
@@ -66,7 +68,7 @@ private fun syntaxList() {
 
     // get value take,first >< last
     println("value position 0 1 2: ${mutableListTest.take(3)}")             // [2003, 1, 4]
-    println("value position 0 1 2: ${mutableListTest.takeWhile { it > 4 }}")    // [2003]
+    println("value position 0 1 2: ${mutableListTest.takeWhile { it % 3 == 0 && it > 5}}")    // [2003]
     println("Value First: ${mutableList.first()}")                      // Value First: Xiaomi
     println("Value Last: ${mutableList.last()}")                        // Value Last: Oppo
 
@@ -101,7 +103,44 @@ private fun syntaxList() {
     println("1 existed on list: ${1 in mutableListTest}")               // 1 existed on list: true
 
     // map
-    println("mutableListTest after map : ${mutableListTest.map { it * it }}")       // [4012009, 49, 36, 25, 16, 9, 9, 1]
+    mutableListTest.map { if (it > 2) it * 2 }
+    println("mutableListTest after map element > 2 then * 2 : $mutableListTest")    // [2003, 7, 6, 5, 4, 3, 3, 1]
+
+    mutableListTest.map {
+        fun check(element: Int){
+            if(element > 10){
+                val firstElementMoreBig10 = element/10
+                println("value firstElementMoreBig10: $firstElementMoreBig10")
+            }else if (element > 2){
+                val firstElementMoreBig2 = element/2
+                println("value firstElementMoreBig2: $firstElementMoreBig2")
+            }
+            when(true){
+                (element > 10) -> println("$element > 10")
+                (element > 2 && element < 10) -> println("2 < $element < 10")
+                (element > 2) -> println("$element > 2")
+                else -> println("Done Check")
+            }
+        }
+        check(it)
+    }
+
+    /* value firstElementMoreBig10: 200
+        2003 > 10
+        value firstElementMoreBig2: 3
+        2 < 7 < 10
+        value firstElementMoreBig2: 3
+        2 < 6 < 10
+        value firstElementMoreBig2: 2
+        2 < 5 < 10
+        value firstElementMoreBig2: 2
+        2 < 4 < 10
+        value firstElementMoreBig2: 1
+        2 < 3 < 10
+        value firstElementMoreBig2: 1
+        2 < 3 < 10
+        Done Check
+    */
 
     // min, max
     println("mutableListTest min : ${mutableListTest.minOrNull()}")                 // 1 // recommend more use .min, .max
@@ -117,14 +156,25 @@ private fun syntaxList() {
     // remove, drop
     println("Drop immutableListOf: ${immutableList.drop(2)}") // [3]
 
-    mutableListTest.remove(3)
-    println("mutableListTest after remove element find first == 3: $mutableListTest") // [1000, 7, 6, 5, 4, 3, 1, 9]
+    mutableListTest.removeAll { !(it % 2 == 0 && it > 2 && it < 7)}
+    println("mutableListTest after remove all element % 2 !== 0 and element < 2 and element > 7 $mutableListTest") // [6, 4]
 
-    mutableListTest.subList(0,3).clear()
-    println("mutableListTest after remove position 0 -> <3: $mutableListTest")      // [5, 4, 3, 1, 9]
+    mutableListTest.remove(3)
+    println("mutableListTest after remove element find first == 3: $mutableListTest") // [6, 4]
+
+    mutableListTest.subList(0,1).clear()
+    println("mutableListTest after remove position 0 -> <3: $mutableListTest")      // [4]
 
     mutableListTest.removeFirst()  // first >< last
-    println("mutableListTest after remove element positon 0: $mutableListTest")     // [7, 6, 5, 4, 3, 3, 1, 9]
+    println("mutableListTest after remove element positon 0: $mutableListTest")     // []
+
+    // value use many extension
+    val valueTest = mutableListOf(1,4,2,5,7,2,12,4,62)
+    val valueManyExtension = valueTest
+        .take(5)
+        .map{it * 5}
+        .filter { it > 18 }
+    println("value Many Extension: $valueManyExtension")    // value Many Extension: [20, 25, 35]
 }
 
 private fun syntaxSet() {

@@ -1,89 +1,99 @@
 package com.example.test.tasks.task1.tasks.task2
 
-import com.example.test.tasks.task2.message
-import com.example.test.tasks.task2.name
-import java.util.concurrent.atomic.LongAdder
-import javax.annotation.processing.Messager
+/*
+Scop parameter:
+   - default no notify => public +> global
+   - private only use class
+   - protected use class and class inheritance
+   - iternal use on file
+*/
 
-// Class
-    /// Class no value
-    class Person1 {
-        var name = ""
-        var age = 18
+
+/*------------------------------------Class-----------------------------------------*/
+// Class no value
+class Person {
+    var name = ""
+    var age = 18
+}
+class Person1 {
+    var name = ""
+    var age = 18
+}
+
+// class constructor
+class User(var name: String, var age: String = "12") {
+    /// constructor primary
+    init {
+        print("primary constructor called")
+        print(name + age)
     }
 
-    /// class constructor
-    class User(var name: String, var age: String = "12") {
-        //// constructor primary
-        init {
-            print("primary constructor called")
-            print(name + age)
-        }
+    /// constructor secondary
+    constructor(address: Int, age: String) : this("Nguyendacson", age) {
+        print("secondary constructor called $name $age")
+    }
+}
 
-        //// constructor secondary
-        constructor(address: Int, age: String) : this("Nguyendacson", age) {
-            print("secondary constructor called $name $age")
+// open class + OOP
+open class Base(
+    /// Encapsulation (Đóng gói)
+    private var name: String,
+    var age: String
+) {
+    open fun getData() = print("name: $name, age: $age ")
+    open fun getDataName(value: String) = print("value is $value")
+}
 
-        }
+/// Inheritance (kế thừa)
+class Inheritance(
+    name: String,
+    age: String,
+    var address: String,
+    var sex: String
+) : Base(name, age) {
+    override fun getData() {
+        print("$address ")
     }
 
-    /// open class
-    open class Base(
-        //// Encapsulation Đóng gói
-        //// default no notify => public +> global
-        //// private only use class
-        //// protected use class and class inheritance
-        //// iternal use on file
-        private var name: String,
-        var age: String
-    ) {
-        open fun getData() = print("name: $name, age: $age ")
-        open fun getDataName(value: String) = print("value is $value")
+    /// Polymorphism (đa hình)
+    override fun getDataName(value: String) {
+        super.getDataName(sex)
     }
+}
 
-    /// Inheritance kế thừa
-    class Inheritance(
-        name: String,
-        age: String,
-        var address: String,
-        var sex: String
-    ) : Base(name, age) {
-        override fun getData() {
-            print("$address ")
-        }
+// Abstract (Trừu tượng)
+abstract class Abstract(
+    name: String,
+    age: String,
+) : Base(name, age) {
+    abstract fun getPrintData(): String
+}
 
-        override fun getDataName(value: String) {
-            super.getDataName(sex)
-        }
+class getAbstract(
+    name: String,
+    age: String,
+    var add: String
+) : Abstract(name, age) {
+    override fun getPrintData(): String {
+        return println(add).toString()
     }
+}
 
-    /// Abstract Trừu tượng
-    abstract class Abstract(
-        name: String,
-        age: String,
-    ) : Base(name, age) {
-        abstract fun getPrintData(): String
-    }
-    /// Abstract Trừu tượng
-    class getAbstract(
-        name: String,
-        age: String,
-        var add: String
-    ) : Abstract(name, age) {
-        override fun getPrintData(): String {
-            return println(add).toString()
-        }
-    }
+class Bird(override val speed: Int) : Interface {
+    override fun fly() = print("bay cao nao nhay cao nao")
+}
+/*------------------------------------End Class-----------------------------------------*/
 
+
+
+/*------------------------------------Interface-----------------------------------------*/
 // interface difference Interface and Class
-    interface Interface {
-        val speed: Int // muốn dùng thì bên class cần overive k có tính sate
-        fun fly()
-    }
+interface Interface {
+    val speed: Int // muốn dùng thì bên class cần overive k có tính sate
+    fun fly()
+}
+/*------------------------------------End Interface-----------------------------------------*/
 
-    class Bird(override val speed: Int) : Interface {
-        override fun fly() = print("bay cao nao nhay cao nao")
-    }
 
 
 //class User2(var name: String){
@@ -96,7 +106,10 @@ import javax.annotation.processing.Messager
 //class Person2(val name: String, val age: Int = 18, val sex: String = "")
 //
 
-// Object // Singleton
+
+
+/*------------------------------------Object-----------------------------------------*/
+// Singleton
 object Status {
     fun print() = print("\nThis is singleton Object")
     var status = "online"
@@ -111,11 +124,15 @@ class objectOnClass {
         fun print() = print("\nHello this is Companion Object")
     }
 }
+/*------------------------------------End Object-----------------------------------------*/
 
 
+
+/*------------------------------------Extension-----------------------------------------*/
 enum class Warring {
     ERROR, LOADING, SUCCESS
 }
+
 
 fun handleEnum(status: Warring) {
     when (status) {
@@ -138,26 +155,30 @@ fun handleEnum1(result: Warring1) {
         Warring1.Loading -> print("Loading")
     }
 }
+/*------------------------------------End Extension-----------------------------------------*/
 
 
 fun main() {
-//    val user = Person1()
-//    user.name = "Nguyen Dac Son"
-//    user.age = 22
-//
-//    val user1 = Person2("nguyendacson")
-//
-//    // the equality operator
-////    println(user == user1) // flase want to true change class is data class
-//
-//    // Copy instance
+    // Class
+    val user = Person()
+    user.name = "Nguyen Dac Son"
+    user.age = 22
+
+    val user1 = Person1()
+    user.name = "Nguyen Dac Son"
+    user.age = 22
+
+    // the equality operator
+    println(user == user1) // flase want to true change class is data class
+
+    // Copy instance
 //    val user2 = Person("nguyendacson")
 //    val user3 = user2.copy("nguyendacsonCopy")
-//
-//    // Object
-//    val object1 = Status
-//    object1.status = "offline"
-//    println(object1.status)
+
+    // Object
+    val object1 = Status
+    object1.status = "offline"
+    println(object1.status)
 
     //Companion object
 
