@@ -1,6 +1,8 @@
 package com.example.test.tasks.task1.tasks.task1
 
-import javax.swing.text.Element
+import com.example.test.tasks.task1.list
+import com.example.test.tasks.task1.tasks.task2.User
+import com.example.test.tasks.task1.tasks.task2.UserUse
 
 private fun syntaxArray() {
     val arrayOf = arrayOf(1, 2, 3)          // except type Int can String, Char, ....
@@ -153,6 +155,13 @@ private fun syntaxList() {
     val newList = mutableListTest.groupBy { if (it % 2 == 0) "Chan" else "Le" }
     println("List after group: $newList")                                           // {Chan=[1000, 6, 4], Le=[7, 5, 3, 3, 1]}
 
+    // union, intersect, subtract
+    val mutableListA = mutableListOf(1, 2, 3, 4)
+    val mutableListB = mutableListOf(3, 4, 5, 6)
+    println("Union (a+b bỏ lặp): ${mutableListA union mutableListB}")           // [1, 2, 3, 4, 5, 6]
+    println("Intersect (a trùng b): ${mutableListA intersect mutableListB}")    // [3, 4]
+    println("Subtract (a có b k có): ${mutableListA subtract mutableListB}")    // [1, 2]
+
     // remove, drop
     println("Drop immutableListOf: ${immutableList.drop(2)}") // [3]
 
@@ -170,11 +179,58 @@ private fun syntaxList() {
 
     // value use many extension
     val valueTest = mutableListOf(1,4,2,5,7,2,12,4,62)
+    val valueTest1 = mutableListOf(23,24,12,4,1,4)
+
     val valueManyExtension = valueTest
         .take(5)
         .map{it * 5}
         .filter { it > 18 }
     println("value Many Extension: $valueManyExtension")    // value Many Extension: [20, 25, 35]
+
+    val valueManyExtension2 = valueTest
+        .plus(valueTest1 subtract  valueTest)
+        .sorted()
+        .filter { it % 2 == 0 }
+        .take(5)
+        .toSet()
+    println("value Many Extension2: $valueManyExtension2")
+
+    val dataData = mutableListOf<UserUse>()
+    val listUser = listOf(
+        UserUse("Son18",18),
+        UserUse("Son20",20),
+        UserUse("Hoàng12",12),
+        UserUse("Hoàng22",22),
+        UserUse("Hoàng21",21),
+        UserUse("Nhi",18,"Women"),
+        UserUse("Nhi15",15,"Women"),
+        UserUse("Tuấn",9),
+    )
+    dataData.addAll(listUser)
+    println("Data User :")
+    dataData.forEach { it ->
+        println("name: ${it.name}, age: ${it.name}, sex: ${it.sex}")
+    }
+
+    val userAge18Male = dataData
+        .filter { it.age > 18 }
+        .filter { it.sex == "Male" }
+        .sortedBy { it.name }
+    userAge18Male.forEach { print("name: ${it.name} ")}
+
+    val startWriteName = listOf("H","S")
+    dataData.filter { it -> startWriteName.any{name -> it.name!!.startsWith(name)} }
+        .sortedBy { it.age }
+        .map {
+        fun checkAndPrint(ageUser: Int) {
+            if (ageUser > 18) {
+                println("${it.name} old enough")
+            } else {
+                println("${it.name} not old enough")
+            }
+        }
+        checkAndPrint(it.age)
+    }
 }
 
 private fun syntaxSet() {
@@ -243,6 +299,7 @@ private fun syntaxSet() {
 
     mutableSetTest.removeAll { it < 5 }
     println("mutableSetTest after clear: $mutableSetTest")      // [7, 5, 6]
+
 }
 
 private fun syntaxMap() {
@@ -304,9 +361,12 @@ private fun syntaxMap() {
 
 
 fun main() {
-    syntaxArray()
-    syntaxList()
-    syntaxSet()
-    syntaxMap()
+        syntaxList()
 }
 
+
+
+//    syntaxArray()
+
+//    syntaxSet()
+//    syntaxMap()

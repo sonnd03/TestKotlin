@@ -172,7 +172,7 @@ fun main() {
     println(user == user1) // flase want to true change class is data class
 
     // Copy instance
-//    val user2 = Person("nguyendacson")
+    val user2 = User("nguyendacson")
 //    val user3 = user2.copy("nguyendacsonCopy")
 
     // Object
