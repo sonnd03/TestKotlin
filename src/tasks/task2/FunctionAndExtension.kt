@@ -10,8 +10,8 @@ private class FunDefault() {
         return println(a)               // Hello
     }
 
-    // function return type
-    fun funReturnType(a: Int): String {
+    // function return type + Default parameter
+    fun funReturnType(a: Int = 12): String {
         return a.toString()             // 18
     }
 
@@ -102,8 +102,8 @@ fun main() {
     // function Unit
     myfunDefault.funUnit("Nguyen Dac Son")
 
-    // function one line
-    println("sum a,b = ${myfunDefault.funOneLine(18, 2)}")              // sum a,b = 20
+    // function one line + Named Argument
+    println("sum a,b = ${myfunDefault.funOneLine(b = 2, a = 18)}")              // sum a,b = 20
     println("sum (a,b).toString = ${myfunDefault.funOneLine1(18, 2)}")  // sum (a,b).toString = 20
     myfunDefault.funOneLine2(2003)                                          // value a: 2003
 
