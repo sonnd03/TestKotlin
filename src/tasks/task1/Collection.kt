@@ -361,12 +361,12 @@ private fun syntaxMap() {
 
 
 fun main() {
-        syntaxList()
+    syntaxArray()
+    syntaxList()
+    syntaxSet()
+    syntaxMap()
 }
 
 
 
-//    syntaxArray()
 
-//    syntaxSet()
-//    syntaxMap()
