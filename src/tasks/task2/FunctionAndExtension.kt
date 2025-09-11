@@ -139,18 +139,9 @@ fun main() {
     // higher order function
     println(
         "value heightOderFunction: ${
-            highOrderFunction.high(
-                18,
-                2
-            ) { a, b -> a + b }
-        }"
+            highOrderFunction.high(18, 2) { a, b -> a + b }}"
     )     // value heightOderFunction: 20
     println(
-        "value heightOderFunctionUseWhen: ${
-            highOrderFunction.checkOrder("plus")(
-                18,
-                2
-            )
-        }"
+        "value heightOderFunctionUseWhen: ${highOrderFunction.checkOrder("plus")(18, 2)}"
     )    // value heightOderFunctionUseWhen: 20
 }
