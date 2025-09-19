@@ -1,8 +1,8 @@
-package com.example.test.tasks.task2
+package com.example.test.tasks.task1.tasks.task2
 
-import com.example.test.tasks.task2.FunDefault.Companion.lastChar
-import com.example.test.tasks.task2.FunDefault.Companion.repeatChar
-import com.example.test.tasks.task2.FunDefault.Companion.sumInt
+import com.example.test.tasks.task1.tasks.task2.FunDefault.Companion.lastChar
+import com.example.test.tasks.task1.tasks.task2.FunDefault.Companion.repeatChar
+import com.example.test.tasks.task1.tasks.task2.FunDefault.Companion.sumInt
 
 private class FunDefault() {
     // function default
