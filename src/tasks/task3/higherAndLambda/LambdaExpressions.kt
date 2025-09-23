@@ -1,4 +1,4 @@
-package com.example.test.tasks.task1.tasks.task3
+package com.example.test.tasks.task1.tasks.task3.higherAndLambda
 
 class LambdaExpressions {
     fun compare(a: String, b: String): Boolean = a.length < b.length
