@@ -1,4 +1,4 @@
-package com.example.test.tasks.task1.tasks.task3
+package com.example.test.tasks.task1.tasks.task3.higherAndLambda
 
 
 private class HeightOrderFunction() {
@@ -11,7 +11,7 @@ private class HeightOrderFunction() {
 
     //function on functon and set one type default
     fun high2(
-        number1: Int, connect1: (Int, Int) -> Int
+        number1: Int, connect1: (Int, Int) -> Int,
     ): Int {
         return connect1(number1, 123)
     }
@@ -23,7 +23,7 @@ private class HeightOrderFunction() {
 
     // function type fun local
     fun high1(
-        number1: Int, connect: (Int, Int) -> Int = ::function1
+        number1: Int, connect: (Int, Int) -> Int = ::function1,
     ): Int {
         return connect(number1, 12)
     }
@@ -44,13 +44,13 @@ private class HeightOrderFunction() {
     inline fun inlineFunction(
         x: Int, y: Int,
         sum: (Int, Int) -> Int,
-        noinline sum1: (Int, Int) -> Int
+        noinline sum1: (Int, Int) -> Int,
     ): Int {
-        return sum(x, y) + sum1(x,y)
+        return sum(x, y) + sum1(x, y)
     }
 
-    inline fun forList(list: List<Int>, get: (Int) -> Unit ){
-        for (i in list){
+    inline fun forList(list: List<Int>, get: (Int) -> Unit) {
+        for (i in list) {
             get(i)
         }
     }
@@ -58,7 +58,7 @@ private class HeightOrderFunction() {
     fun doSomething() {
         println("doSomething start")
         doSomethingElse()
-        getMessage{
+        getMessage {
             println("hehehe")
 //            return // error
         }
@@ -69,7 +69,7 @@ private class HeightOrderFunction() {
         println("doSomethingElse")
     }
 
-    inline fun getMessage(crossinline ms: () -> Unit){
+    inline fun getMessage(crossinline ms: () -> Unit) {
         ms()
     }
 
@@ -111,7 +111,7 @@ fun main() {
     val invoke = TestInvoking()
     invoke("Son", 12)
 
-    println(high.inlineFunction(12,2,{x, y -> x + y}, {x,y -> x- y}))
+    println(high.inlineFunction(12, 2, { x, y -> x + y }, { x, y -> x - y }))
 
 //    val list = listOf(1,2,3,4,5,6,7,8)
 //    high.forList(list){
