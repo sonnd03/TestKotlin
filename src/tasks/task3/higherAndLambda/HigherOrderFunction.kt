@@ -1,6 +1,5 @@
 package com.example.test.tasks.task1.tasks.task3.higherAndLambda
 
-
 private class HeightOrderFunction() {
 
     operator fun invoke(name: String, age: Int) {
@@ -113,12 +112,12 @@ fun main() {
 
     println(high.inlineFunction(12, 2, { x, y -> x + y }, { x, y -> x - y }))
 
-//    val list = listOf(1,2,3,4,5,6,7,8)
-//    high.forList(list){
-//        if (it == 3) return /// out ra khoi lop cha
-//        println(it)
-//    }
-//    println("no out")
+    val list = listOf(1, 2, 3, 4, 5, 6, 7, 8)
+    high.forList(list) {
+        if (it == 3) return /// out ra khoi lop cha
+        println(it)
+    }
+    println("no out")
 
     high.doSomething()
 

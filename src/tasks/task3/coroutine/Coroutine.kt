@@ -1,21 +1,11 @@
 package com.example.test.tasks.task1.tasks.task3.coroutine
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.yield
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.time.withTimeoutOrNull
-import java.lang.Exception
-import javax.swing.JButton
-
-
-// Coroutine and Thread
+// Coroutine
 @OptIn(DelicateCoroutinesApi::class)
-fun deferenceThreadAndCoroutine(){
+fun coroutine() {
     println("Main start: ${Thread.currentThread().name}")
     GlobalScope.launch {
         println("Fake start: ${Thread.currentThread().name}")
@@ -27,280 +17,292 @@ fun deferenceThreadAndCoroutine(){
 }
 
 
- // Use launch or sync
-//fun main() = runBlocking {
-//    println("Main start: ${Thread.currentThread().name}")
-//    val deferred: Deferred<Int> = async {
-//        println("Fake start: ${Thread.currentThread().name}")
-//        delay(1000)
-//        println("Fake finish: ${Thread.currentThread().name}")
-//
-//        15
-//    }
-////    val job: Job= launch {
-////        println("Fake start: ${Thread.currentThread().name}")
-////        delay(1000)
-////        println("Fake finish: ${Thread.currentThread().name}")
-////    }
-//    delay(4000)
-//    val num: Int = deferred.await()
-//    println(num)
-//    deferred.join()
-////    job.join()
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
-
-fun useLaunchAndAsync() = runBlocking {
+// Deference between Thread and Coroutine
+@OptIn(DelicateCoroutinesApi::class)
+fun deferenceThreadAndCoroutine() {
     println("Main start: ${Thread.currentThread().name}")
-
-    val deferred: Deferred<Int> = async {
-        println("Fake start: ${Thread.currentThread().name}")
-        delay(1000)
-        println("Fake finish: ${Thread.currentThread().name}")
-        15
+    runBlocking {
+        val job: Job = launch {
+            println("Fake start: ${Thread.currentThread().name}")
+            delay(2000)
+            println("Fake finish: ${Thread.currentThread().name}")
+        }
+        delay(4000)
+        job.cancelAndJoin()
     }
 
-    val job: Job= launch {
-        println("Fake start: ${Thread.currentThread().name}")
-        delay(1000)
-        println("Fake finish: ${Thread.currentThread().name}")
+    GlobalScope.launch {
+        println("input method Launch")
     }
-
-//    delay(4000)
-    val num: Int = deferred.await()
-    println(num)
-    deferred.join()
-//    job.join()
+    // có thể thấy nội dung của launch k được chạy vì nó k có tính Block Thread
+    // Thread.sleep(50) // cho Thread dừng thì sẽ thực thi block
     println("Main program end: ${Thread.currentThread().name}")
 }
 
 
+// Use launch or sync
+fun useLaunchAndAsync() = runBlocking {
+    println("Main start: ${Thread.currentThread().name}")
+
+    val deferred: Deferred<Int> = async {
+        println("Fake start Async: ${Thread.currentThread().name}")
+        delay(1000)
+        println("Fake finish Async: ${Thread.currentThread().name}")
+        15
+    }
+
+    val job: Job = launch {
+        println("Fake start Launch: ${Thread.currentThread().name}")
+        delay(1000)
+        println("Fake finish Launch: ${Thread.currentThread().name}")
+    }
+
+    delay(5000)
+    val num: Int = deferred.await()
+    println(num)
+
+    deferred.join()
+    job.join()
+
+    println("Main program end: ${Thread.currentThread().name}")
+}
+
+
+// user runBlocking recommend
 suspend fun mySuspendingFunc() {
     delay(1000)
 }
 
-fun main() {
-//    deferenceThreadAndCoroutine()
-    useLaunchAndAsync()
+
+// coroutine is Cooperative
+class CoroutineCooperative {
+
+    /// Non Cooperative => can not cancel
+    fun coroutineNonCooperative() = runBlocking {
+        println("Main start: ${Thread.currentThread().name}")
+        val job: Job = launch {
+            for (i in 1..10000000) {
+                println("$i. ")
+                println("Main check: ${Thread.currentThread().name}")
+            }
+        }
+        delay(2000)
+        job.cancelAndJoin()
+    }
+
+    /// Cooperative with isActive
+    fun coroutineCooperativeIATV() = runBlocking {
+        println("Main start: ${Thread.currentThread().name}")
+        val job: Job = launch {
+            for (i in 1..10000000) {
+                if (!isActive) {
+                    break
+                }
+                println("Cancelled at $i")
+                println("Check thread: ${Thread.currentThread().name}")
+            }
+        }
+        job.cancelAndJoin()
+        println("Main program end: ${Thread.currentThread().name}")
+    }
+
+    /// Cooperative with delay, yield
+    fun coroutineCooperativeLaunch() = runBlocking {
+        println("Main start: ${Thread.currentThread().name}")
+        val job: Job = launch {
+            for (i in 1..10000000) {
+                println("Cancelled at $i")
+                delay(200)
+                yield()
+                println("Check thread: ${Thread.currentThread().name}")
+            }
+        }
+        job.cancelAndJoin()
+        println("Main program end: ${Thread.currentThread().name}")
+    }
 }
 
 
+// use withContext
+class WithContext() {
+    fun withContextFinally() = runBlocking {
+        println("Main start: ${Thread.currentThread().name}")
+        val job: Job = launch {
+            try {
+                for (i in 1..2) {
+                    println("$i ")
+                    delay(200) // can cancel because this is cooperative
+                }
+            } catch (ex: CancellationException) {
+                println("Exception is safety: $ex")
+            } finally {
+                withContext(NonCancellable) {
+                    delay(1000)
+                    println("Main delay: ${Thread.currentThread().name}")
+                    println("Done delay")
+                }
+            }
 
+        }
+        delay(500)
+        job.cancelAndJoin()
+        println("Main program end: ${Thread.currentThread().name}")
+    }
 
-// Use runBlocking
-//fun main() = runBlocking {
-//    println("Main start: ${Thread.currentThread().name}")
-//    val job: Job = launch {
-//        println("Fake start: ${Thread.currentThread().name}")
-//        delay(1000)
-//        println("Fake finish: ${Thread.currentThread().name}")
-//    }
-////    delay(2000)
-//    job.join()
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
-//
+    fun withCotextDefault() = runBlocking {
+        val job: Job = launch {
+            for (i in 1..2) {
+                println("$i ")
+                withContext(NonCancellable) {
+                    delay(2000) // can cancel because this is cooperative
+                    println("Main delay: ${Thread.currentThread().name}")
+                    println("Done delay")
+                }
+            }
+        }
+        job.cancelAndJoin()
+        println("Main program end: ${Thread.currentThread().name}")
+    }
+}
 
-
-// equals launch, async and runBlocking
-//fun main()  {
-//    println("Main start: ${Thread.currentThread().name}")
-//
-//    runBlocking {
-//        println("Fake start: ${Thread.currentThread().name}")
-//        delay(2000)
-//        println("Fake finish: ${Thread.currentThread().name}")
-//    }
-////    GlobalScope.launch {
-////        println("Fake start: ${Thread.currentThread().name}")
-////        delay(2000)
-////        println("Fake finish: ${Thread.currentThread().name}")
-////    }
-////    delay(2000)
-////    val num: Int = deferred.await()
-////    println(num)
-////    deferred.join()
-//    Thread.sleep(500)
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
-
-// coroutine is Cooperative
-//fun main() = runBlocking {
-//    println("Main start: ${Thread.currentThread().name}")
-//
-//    val job: Job = launch(Dispatchers.Default) {
-//        for (i in 1..10_0000) {
-//            if (!isActive) {
-//                return@launch
-//            }
-//            println("$i. ")
-//            Thread.sleep(1)
-//            println("Main check: ${Thread.currentThread().name}")
-//
-////            println("$i. ")
-////            Thread.sleep(200) // không dừng vig k phải cooperative
-////            delay(200) // hủy được vì là copperative
-////            yield() // hủy được vì là copperative không delay mà vẫn là coparative
-//        }
-//    }
-//
-////    delay(2000)
-//    delay(10)
-//    job.cancel()
-////    job.join()
-//    job.cancelAndJoin()
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
-
-// Handling Exception
-//fun main() = runBlocking {
-//    println("Main start: ${Thread.currentThread().name}")
-//
-////    val job: Job = launch(Dispatchers.Default) {
-////        try {
-////            for (i in 1..500) {
-////                println("$i ")
-////                delay(200) // hủy được vì là copperative
-////            }
-////        } catch (ex: CancellationException) {
-////            println("Exception is safety: $ex")
-////        } finally {
-////            withContext(NonCancellable) {
-////                delay(1000)
-////                println("Main delay: ${Thread.currentThread().name}")
-////                println("Done delay")
-////            }
-////        }
-////    }
-//    val job: Job = launch(Dispatchers.Default) {
-//        for (i in 1..500) {
-//            println("$i ")
-//            withContext(NonCancellable) {
-//                delay(50)
-//                println("check")
-//            }
-////            delay(200) // hủy được vì là copperative
-//        }
-//
-//    }
-//    delay(5000)
-//    job.cancel()
-//    job.join()
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
 
 // Time out
-//fun main() = runBlocking {
-//    println("Main start: ${Thread.currentThread().name}")
-//
-//    val result: String? = withTimeoutOrNull(2000) {
-//        for (i in 0..2) {
-//            println("$i ")
-//            delay(500)
-//        }
-//        "Hello"
-//    }
-//
-////    val result: String = withTimeout(2000){
-////        for (i in 0..5) {
-////            println("$i ")
-////            delay(500)
-////        }
-////        "Hello"
-////    }
-//    println(result)
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
+class TimeOut() {
+    fun useWithTimeOutOrNull() = runBlocking {
+        println("Main start: ${Thread.currentThread().name}")
+
+        val result: String? = withTimeoutOrNull(2000) {
+            for (i in 0..8) {
+                println("$i ")
+                delay(500)
+            }
+            "Hello"
+        }
+        println(result)
+        println("Main program end: ${Thread.currentThread().name}")
+
+        /*
+        * Nếu hoàn thành block result trong 2000 ms => k trả ra null
+        * Nếu không hoàn thành thì thực thi hết 2000 ms => trả result về null
+        */
+    }
+
+    fun useWithTimeOut() = runBlocking {
+        try {
+            val result: String = withTimeout(2000) {
+                for (i in 0..5) {
+                    println("$i ")
+                    delay(500)
+                }
+                "Hello"
+            }
+            println(result)
+            println("Main program end: ${Thread.currentThread().name}")
+        } catch (ex: TimeoutCancellationException) {
+            println("error: $ex")
+        }
+
+        /*
+        * Nếu hoàn thành block result trong 2000 ms => k trả ra exception
+        * Nếu không hoàn thành thì thực thi hết 2000 ms => bắn ra exception  ex: Timed out waiting for 2000 ms
+        */
+    }
+}
+
+// Composing Suspending Function
+class ComposingSuspendingFunc() {
+    companion object {
+        fun composingSuspending() = runBlocking {
+            println("Main program Start: ${Thread.currentThread().name}")
+            val time = measureTimeMillis {
+                val mes1 = async { getMessageOne() }
+                val mes2 = async { getMessageTwo() }
+                println("Sum mess: ${mes1.await() + mes2.await()}")
+            }
+            println("Sum times: $time")         // chạy song song nên thấy chỉ mất 1000 ms
+            println("Main program end: ${Thread.currentThread().name}")
+        }
+
+        fun composingNonSuspending() = runBlocking {
+            println("Main program Start: ${Thread.currentThread().name}")
+            val time = measureTimeMillis {
+                val mes1 = getMessageOne()
+                val mes2 = getMessageTwo()
+                println("Sum mess: ${mes1 + mes2}")
+            }
+
+            println("Sum times: $time")         // không chạy song song => thấy 2000 ms
+            println("Main program end: ${Thread.currentThread().name}")
+        }
+
+        suspend fun getMessageOne(): String {
+            delay(1000)
+            println("Message one")
+            return "Hello One"
+        }
+
+        suspend fun getMessageTwo(): String {
+            delay(1000)
+            println("Message two")
+            return " Hello Two"
+        }
+    }
+}
+
+// Composing Suspending Function
+class UseStartLazy() {
+    fun lazyNonPrint() = runBlocking {
+        println("Main program Start: ${Thread.currentThread().name}")
+        val mes1 =
+            async(start = CoroutineStart.LAZY) { getMessageOne() }  // no start lazyPrintAndStart to when use mes1
+        println("Main program end: ${Thread.currentThread().name}")
+    }
+
+    fun lazyNonPrintAndStart() = runBlocking {
+        println("Main program Start: ${Thread.currentThread().name}")
+        val mes1 = async { getMessageOne() }                                // allways start lazyPrintAndStart
+        println("Main program end: ${Thread.currentThread().name}")
+    }
+
+    fun lazyPrintAndStart() = runBlocking {
+        println("Main program Start: ${Thread.currentThread().name}")
+        val mes1 = async(start = CoroutineStart.LAZY) { getMessageOne() }
+        println("Sum mess: $mes1")                                          // start when use mes1 -> print Message One
+        println("Main program end: ${Thread.currentThread().name}")
+    }
+
+    suspend fun getMessageOne(): String {
+        delay(1000)
+        println("Message one")
+        return "Hello One"
+    }
+}
 
 
+fun main() {
+    coroutine()
+    deferenceThreadAndCoroutine()
+    useLaunchAndAsync()
 
-////// Composing Suspending Function
-//fun main() = runBlocking {
-//    println("Main program Start: ${Thread.currentThread().name}")
-//    val time = measureTimeMillis {
-//        val mes1 = async(start = CoroutineStart.LAZY){ getMessageOne() }
-//        val mes2 = async { getMessageTwo() }
-//        println("Sum mess: ${mes1.await() + mes2.await()}")
-//    }
-//    println("Sum times: $time")
-//    println("Main program end: ${Thread.currentThread().name}")
-//}
-//
-//
-//suspend fun getMessageOne(): String{
-//    delay(1000)
-//    println("Message one")
-//    return "Hello One"
-//}
-//
-//suspend fun getMessageTwo(): String{
-//    delay(1000)
-//    println("Message two")
-//    return " Hello Two"
-//}
+    val coroutineCPT = CoroutineCooperative()
+    coroutineCPT.coroutineNonCooperative()
+    coroutineCPT.coroutineCooperativeIATV()
+    coroutineCPT.coroutineCooperativeLaunch()
 
+    val withContext = WithContext()
+    withContext.withContextFinally()
+    withContext.withCotextDefault()
 
-//// Coroutine Scop
-//fun main() = runBlocking {
-//    println(this)
-//
-//    launch {
-//        println("launch: $this")
-//    }
-//
-//    async {
-//        println("async: $this")
-//    }
-//
-//    println("end")
-//}
+    val timeOut = TimeOut()
+    timeOut.useWithTimeOut()
+    timeOut.useWithTimeOutOrNull()
 
+    ComposingSuspendingFunc.composingSuspending()
+    ComposingSuspendingFunc.composingNonSuspending()
 
-//fun main() = runBlocking {
-//    lambdaOne()
-//
-//    launch {
-//        delay(2000)
-//        println("Only launch")
-//    }
-//
-//    launch(Dispatchers.Default){
-//        println("before Default")
-//        delay(2000)
-//        println("Default")
-//    }
-//
-//    launch {
-//        lambdaOne() // 5000
-//
-//    }
-//    launch {
-//        loadData()  // 1000
-//    }
-//
-//    println("Done")
-//}
-
-/* Các bước chạy
-* chạy từ trên xuống
-* gặp lambdaOne() -> chạy trước
-* khi xong
-* gặp 3 hàm launch => cho vào hàng chờ (cho lần lượt nhưng thực thi cùng 1 lúc )
-* gặp print => in ra Done và chạy đồng thời chạy các hàm đợi
-*=> 1 s sau chạy ra loadData
-* => 1 sa sau chạy ra print only Launch
-*  => 3 s sau chạy ra lambdaOne
-*  */
-
-//suspend fun lambdaOne() {
-//    delay(5000)
-//    println("lambadaOne")
-//}
-//
-//suspend fun loadData() {
-//    delay(1000)
-//    println("fun Load")
-//}
-
-
+    val useStartLazy = UseStartLazy()
+    useStartLazy.lazyNonPrintAndStart()
+    useStartLazy.lazyNonPrint()
+    useStartLazy.lazyPrintAndStart()
+}
 
