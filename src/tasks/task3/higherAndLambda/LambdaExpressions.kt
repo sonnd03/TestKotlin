@@ -13,6 +13,7 @@ fun lambdaTypes() {
     val useNotIt = { a: Int -> a * a }
     val useIt: (Int) -> Int = { it * it }
     println(useIt(18))
+    println(useNotIt(18))
 
     // no param
     val noParam = { println("Hello my friend") }
@@ -32,9 +33,15 @@ fun lambdaTypes() {
     }
 }
 
+// extension lambda
+val String.lowerKey
+    get() = {
+        println(this)
+    }
+
 // lamda return create function
-fun multiplier(number: Int): (Int) -> Int{
-    return {item -> item * number}
+fun multiplier(number: Int): (Int) -> Int {
+    return { item -> item * number }
 }
 
 // anonymous lambda
@@ -44,6 +51,8 @@ val anonymousLambda = fun(a: Int, b: Int): Int {
 
 
 fun main() {
+    lambdaTypes()
+
     val lambda = LambdaExpressions()
     val items = listOf(1, 2, 3, 4, 5, 6)
     val items1 = listOf(1 to "many", 2 to "happy", 3 to "friendy", 4 to "funny", 5 to "country", 6 to "hihi")
@@ -70,7 +79,8 @@ fun main() {
     items.filter { it > 0 }
         .forEach {
             println(sum)
-            sum += it }
+            sum += it
+        }
         .also { println(sum) }
     println(sum)
 
@@ -80,5 +90,5 @@ fun main() {
 
     println(multiplier(12))
 
-    println(anonymousLambda(18,2))
+    println(anonymousLambda(18, 2))
 }
