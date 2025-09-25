@@ -1,6 +1,9 @@
 package com.example.test.tasks.task1.tasks.task3.coroutine
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 //fun main() = runBlocking {
 //    lambdaOne()
@@ -50,16 +53,16 @@ suspend fun loadData() {
 
 
 /* ================================================================== */
-suspend fun block1(){
-    for (i in 1..500){
+suspend fun block1() {
+    for (i in 1..500) {
         println("tetsts1")
         delay(1000)
         println("block 1: $i")
     }
 }
 
-suspend fun block2(){
-    for (i in 1..100){
+suspend fun block2() {
+    for (i in 1..100) {
         println("tetsts2")
         delay(2000)
         println("block 2: $i")

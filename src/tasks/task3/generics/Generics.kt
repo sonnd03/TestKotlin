@@ -9,27 +9,29 @@ package com.example.test.tasks.task1.tasks.task3.generics
 // Generics Class
 data class Person(
     val name: String = "USERNAME",
-    val action: String = "badminton"
+    val action: String = "badminton",
 )
+
 data class Student(
     val detail: String = "Is Student",
-    val action: String = "Learning"
+    val action: String = "Learning",
 )
+
 data class Teacher(
     val age: Int = 18,
     val detail: String = "Is Teacher",
     val address: String = "Ha Noi",
-    val action: String = "Reading"
+    val action: String = "Reading",
 )
 
 class Generics<T> {
-    fun insert(ps: T){
+    fun insert(ps: T) {
         println("insert new Person $ps ok")
     }
 }
 
 // Generics Function
-fun <T>getData(data: T): String {
+fun <T> getData(data: T): String {
     val message = "data is: $data"
     return message
 }
